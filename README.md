@@ -15,7 +15,7 @@ To setup this bot, run the setup.sh script:
 chmod +x setup.sh
 sudo ./setup.sh
 ```
-This will install all dependencies for the bot. The dependencies are as listed below:\
+This will install all dependencies for the bot. The dependencies are as listed below:
 - asyncio
 - aiohttp (3.3.0-3.4.3)
 - discord.py (1.0.0a0)

@@ -109,7 +109,7 @@ async def on_ready():
 
 @bot.command()
 async def info(ctx):
-	embed = discord.Embed(title="Dungeon-Master", description="Use this bot for making dice rolls, doing math, creating straw polls, answering questions, or to bug Jeremy to add more features.\nLook at the full write up with !help or on Github at https://github.com/JeremyEudy/Dungeon-Master-Bot", color=0xeee657)
+	embed = discord.Embed(title="Dungeon-Master", description="Use this bot for making dice rolls, doing math, creating straw polls, answering questions, or to bug the devs to add more features.\nLook at the full write up with !help or on Github at https://github.com/PolyProgrammingClub/Dungeon-Master-Bot", color=0xeee657)
 	embed.add_field(name="Author", value="Fascist Stampede")
 	embed.add_field(name="Server count", value=len(bot.guilds))
 	embed.add_field(name="Invite", value="https://discordapp.com/api/oauth2/authorize?client_id=458438661378277379&permissions=36849728&scope=bot")
@@ -198,7 +198,7 @@ async def on_member_join(member):
 	except:
 		pass
 	try:
-		fileInfo = "CustomData/"+server+"_DefaultRole.txt"
+	        fileInfo = "CustomData/"+server+"_DefaultRole.txt"
 		f = open(fileInfo, "r")
 		roleName = str(f.read().rstrip())	#Get role name
 		role = discord.utils.get(member.guild.roles, name=roleName)	#Find the role object that has that name
@@ -207,7 +207,7 @@ async def on_member_join(member):
 	except:
 		pass
 
-@bot.command(name='DefaultRole', description="A command to set the default role given to new members upon joining a server.")
+@bot.command(name="DefaultRole", description="A command to set the default role given to new members upon joining a server.", aliases="defaultrole")
 async def DefaultRole(ctx, *args):
 	if(Check_Admin(ctx)):
 		text = '{}'.format(' '.join(args))
@@ -218,9 +218,9 @@ async def DefaultRole(ctx, *args):
 		await ctx.send("The default role is now "+text)
 		f.close()
 
-@bot.command(name='DefaultChannel', description="A command to set the default channel for the server.")
+@bot.command(name="DefaultChannel", description="A command to set the default channel for the server.", aliases="defaultchannel")
 async def DefaultChannel(ctx, *args):
-	if(Check_Admin(ctx)):
+        if(Check_Admin(ctx)):
 		text = '{}'.format(' '.join(args))
 		server = str(ctx.guild.name)
 		fileInfo = "CustomData/"+server+"_DefaultChannel.txt"
@@ -228,6 +228,23 @@ async def DefaultChannel(ctx, *args):
 		f.write(text)			#Generates a file containing the default channel for your server
 		await ctx.send("The default channel is now "+text)
 		f.close()
+
+@bot.command(name="Badge", description="Prints list of badges OR prints all users with specific badges", aliases="badge")
+async def Badge(ctx, *args):
+        server = str(ctx.guild.name)
+        if(text is None):
+                fileInfo = "CustomData/"+server+"_BadgeList.txt"
+                try:
+                        f = open(fileInfo, 'r')
+                        badgeList = f.readlines()
+                        badges = ', '.join(badgeList)
+                        await ctx.send("Here's a list of badges:\n"+badges)
+                except:
+                        pass
+        else:
+                fileInfo = "CustomData/"+server+"_UserList.json"
+                badgeList = list(*args)
+                # The rest of this is dependent on how the json is formatted. The file has to be searched for the union of badgeList and ping = yes
 
 @bot.command(description="Returns a string with alternating case.")
 async def sponge(ctx, *args):
